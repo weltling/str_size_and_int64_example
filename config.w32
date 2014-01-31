@@ -1,0 +1,6 @@
+ARG_ENABLE("str_size_and_int64", "enable str_size_and_int64 support", "no");
+
+if (PHP_STR_SIZE_AND_INT64 != "no") {
+	EXTENSION("str_size_and_int64", "str_size_and_int64.c");
+}
+
