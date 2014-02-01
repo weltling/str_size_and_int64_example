@@ -13,7 +13,7 @@ dnl [  --with-str_size_and_int64             Include str_size_and_int64 support]
 
 dnl Otherwise use enable:
 
-dnl PHP_ARG_ENABLE(str_size_and_int64, whether to enable str_size_and_int64 support,
+PHP_ARG_ENABLE(str_size_and_int64, whether to enable str_size_and_int64 support,
 dnl Make sure that the comment is aligned:
 [  --enable-str_size_and_int64           Enable str_size_and_int64 support])
 
