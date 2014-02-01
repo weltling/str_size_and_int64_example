@@ -38,8 +38,6 @@ extern zend_module_entry str_size_and_int64_module_entry;
 #include "TSRM.h"
 #endif
 
-#include "compat.h"
-
 /* 
   	Declare any global variables you may need between the BEGIN
 	and END macros here:     

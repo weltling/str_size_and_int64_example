@@ -47,7 +47,7 @@ PHP_INI_END()
 PHP_FUNCTION(confirm_str_size_and_int64_string_test)
 {
 	char *arg = NULL;
-	php_size_t arg_len, len;
+	int arg_len, len;
 	char *strg;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &arg, &arg_len) == FAILURE) {
@@ -60,23 +60,23 @@ PHP_FUNCTION(confirm_str_size_and_int64_string_test)
 
 PHP_FUNCTION(confirm_str_size_and_int64_int_test)
 {
-	php_int_t i;
-	php_size_t len;
+	long i;
+	int len;
 	char *strg;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &i) == FAILURE) {
 		return;
 	}
 
-	len = spprintf(&strg, 0, ZEND_INT_FMT " is the param", i);
+	len = spprintf(&strg, 0, "%ld is the param", i);
 	RETURN_STRINGL(strg, len, 0);
 }
 
 PHP_FUNCTION(confirm_str_size_and_int64_array_test)
 {
-	php_int_t  i, j;
+	long  i, j;
 	char	   *str_key;
-	php_uint_t num_key;
+	ulong num_key;
 	zval       **elem = NULL;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &i) == FAILURE) {
@@ -101,15 +101,18 @@ PHP_FUNCTION(confirm_str_size_and_int64_array_test)
 
 PHP_FUNCTION(confirm_str_size_and_int64_path_test)
 {
-	php_size_t len;
+	int len;
 	char *str;
-	php_stat_t st;
-
+	struct stat st;
+#if PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION <= 3
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &str, &len) == FAILURE) {
+#else
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "p", &str, &len) == FAILURE) {
+#endif
 		return;
 	}
 
-	zend_stat(str, &st);
+	stat(str, &st);
 
 	RETURN_LONG(st.st_size);
 
