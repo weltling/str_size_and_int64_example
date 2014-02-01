@@ -105,7 +105,11 @@ PHP_FUNCTION(confirm_str_size_and_int64_path_test)
 	char *str;
 	php_stat_t st;
 
+#if PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION <= 3
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &str, &len) == FAILURE) {
+#else
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "p", &str, &len) == FAILURE) {
+#endif
 		return;
 	}
 
